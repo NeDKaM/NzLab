@@ -67,4 +67,10 @@ namespace ex {
         return { *elements_.emplace_back(element) };
     }
 
+    void container::show(bool value) {
+        for (auto & element : elements_) {
+            element->show(value);
+        }
+    }
+
 }

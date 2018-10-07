@@ -28,4 +28,9 @@ namespace ex {
         Gfx::size(gfx_, value);
     }
 
+    template <typename Gfx>
+    void interface<Gfx>::show(bool value) {
+        entity_->Enable(value);
+    }
+
 }

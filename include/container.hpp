@@ -41,6 +41,8 @@
 
                 std::size_t count() const;
 
+                void show(bool value) override;
+
             private:
                 template <typename Interface>
                     handle<Interface> insert(Interface * element);
