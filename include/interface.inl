@@ -33,4 +33,9 @@ namespace ex {
         entity_->Enable(value);
     }
 
+    template <typename Gfx>
+    void interface<Gfx>::scissor(Nz::Recti const & rect) {
+        entity_->GetComponent<Ndk::GraphicsComponent>().SetScissorRect(rect);
+    }
+
 }

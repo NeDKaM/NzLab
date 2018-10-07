@@ -73,4 +73,17 @@ namespace ex {
         }
     }
 
+    void container::scissor(bool value) {
+        Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
+        Nz::Vector2i siz{ size() };
+        Nz::Recti rect{ (value) ? Nz::Recti{ pos.x, pos.y, siz.x, siz.y } : Nz::Recti{ -1, -1 } };
+        scissor(rect);
+    }
+
+    void container::scissor(Nz::Recti const & rect) {
+        for (auto & elm : elements_) {
+            elm->scissor(rect);
+        }
+    }
+
 }

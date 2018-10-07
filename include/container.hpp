@@ -43,9 +43,13 @@
 
                 void show(bool value) override;
 
+                void scissor(bool value);
+
             private:
                 template <typename Interface>
                     handle<Interface> insert(Interface * element);
+
+                void scissor(Nz::Recti const &) override;
         };
 
     }
