@@ -21,6 +21,10 @@
                 virtual Nz::Vector2f size() const = 0;
                 virtual void size(Nz::Vector2f const & value) = 0;
 
+                virtual void show(bool value) = 0;
+
+                virtual void scissor(Nz::Recti const &) = 0;
+
                 void anchor(ex::anchor const & value) {
                     anchor_ = value;
                 }

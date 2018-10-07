@@ -13,7 +13,7 @@ namespace ex {
     template <typename Interface, typename>
     inline owner<Interface> container::release(Interface * element) {
         if (auto it = std::find_if(elements_.begin(), elements_.end(), [element](owner_type const & elm) { return element == *elm; })
-            ; it != elements_.end()) {
+        ; it != elements_.end()) {
             element->SetParent(nullptr);
             owner<Interface> owner{ it->release() };
             elements_.erase(it);
@@ -59,11 +59,31 @@ namespace ex {
             return {};
         }
         element->SetParent(this);
-        if (auto it = std::find_if(elements_.begin(), elements_.end(), [element](owner_type const & elm) { return element == *elm; })
-            ; it != elements_.end()) {
-            return { element };
+        for (auto & elm : elements_) {
+            if (*elm == element) {
+                return { element };
+            }
         }
         return { *elements_.emplace_back(element) };
+    }
+
+    void container::show(bool value) {
+        for (auto & element : elements_) {
+            element->show(value);
+        }
+    }
+
+    void container::scissor(bool value) {
+        Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
+        Nz::Vector2i siz{ size() };
+        Nz::Recti rect{ (value) ? Nz::Recti{ pos.x, pos.y, siz.x, siz.y } : Nz::Recti{ -1, -1 } };
+        scissor(rect);
+    }
+
+    void container::scissor(Nz::Recti const & rect) {
+        for (auto & elm : elements_) {
+            elm->scissor(rect);
+        }
     }
 
 }
