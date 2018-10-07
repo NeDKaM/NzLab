@@ -13,7 +13,7 @@ namespace ex {
     template <typename Interface, typename>
     inline owner<Interface> container::release(Interface * element) {
         if (auto it = std::find_if(elements_.begin(), elements_.end(), [element](owner_type const & elm) { return element == *elm; })
-            ; it != elements_.end()) {
+        ; it != elements_.end()) {
             element->SetParent(nullptr);
             owner<Interface> owner{ it->release() };
             elements_.erase(it);
@@ -59,9 +59,10 @@ namespace ex {
             return {};
         }
         element->SetParent(this);
-        if (auto it = std::find_if(elements_.begin(), elements_.end(), [element](owner_type const & elm) { return element == *elm; })
-            ; it != elements_.end()) {
-            return { element };
+        for (auto & elm : elements_) {
+            if (*elm == element) {
+                return { element };
+            }
         }
         return { *elements_.emplace_back(element) };
     }
