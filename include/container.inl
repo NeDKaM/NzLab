@@ -29,13 +29,7 @@ namespace ex {
             if (!*element) {
                 continue;
             }
-            ex::anchor anch { element->anchor() };
-            Nz::Vector2f elmsize { element->size() };
-            element->SetInitialPosition(size_ * anch.min);
-            element->size({
-                (anch.max.x != anch.min.x) ? size_.x * (anch.max.x - anch.min.x) : elmsize.x
-                , (anch.max.y != anch.min.y) ? size_.y * (anch.max.y - anch.min.y) : elmsize.y
-            });
+            element->anchor(*this, element->anchor());
         }
     }
 

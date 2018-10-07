@@ -25,14 +25,12 @@
 
                 virtual void scissor(Nz::Recti const &) = 0;
 
-                void anchor(ex::anchor const & value) {
-                    anchor_ = value;
-                }
-                ex::anchor anchor() const {
-                    return anchor_;
-                }
+                void anchor(base_interface const &, ex::anchor const &);
+                ex::anchor anchor() const;
         };
 
     }
+
+    #include "base_interface.inl"
 
 #endif /* HPP_BASE_INTERFACE_INCLUDED */
