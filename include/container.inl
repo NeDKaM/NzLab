@@ -25,27 +25,26 @@ namespace ex {
 
     void container::collocate() const
     {
+        ex::padding pad{ padding() };
+        Nz::Vector3f pos{ GetPosition() + Nz::Vector3f{ pad.left, pad.top, 0.f } };
+
         for (auto & element : elements_) {
             if (!*element) {
                 continue;
             }
-            ex::anchor anch { element->anchor() };
-            Nz::Vector2f elmsize { element->size() };
-            element->SetInitialPosition(size_ * anch.min);
-            element->size({
-                (anch.max.x != anch.min.x) ? size_.x * (anch.max.x - anch.min.x) : elmsize.x
-                , (anch.max.y != anch.min.y) ? size_.y * (anch.max.y - anch.min.y) : elmsize.y
-            });
+            element->anchor(pos, contentsize_, element->anchor());
         }
     }
 
     void container::size(Nz::Vector2f const & value) {
-        size_ = value;
+        ex::padding pad{ padding() };
+        contentsize_ = value - Nz::Vector2f{ pad.left + pad.right, pad.top + pad.bottom };
         collocate();
     }
 
     Nz::Vector2f container::size() const {
-        return size_;
+        ex::padding pad{ padding() };
+        return contentsize_ + Nz::Vector2f{ pad.left + pad.right, pad.top + pad.bottom };
     }
 
     std::size_t container::count() const {
@@ -74,15 +73,31 @@ namespace ex {
     }
 
     void container::scissor(bool value) {
-        Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
-        Nz::Vector2i siz{ size() };
-        Nz::Recti rect{ (value) ? Nz::Recti{ pos.x, pos.y, siz.x, siz.y } : Nz::Recti{ -1, -1 } };
+        ex::padding pad{ padding() };
+        Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } + Nz::Vector2f{ pad.left, pad.top } };
+        Nz::Recti rect{ (value) ? Nz::Recti{ pos.x, pos.y, static_cast<int>(contentsize_.x), static_cast<int>(contentsize_.y) } : Nz::Recti{ -1, -1 } };
         scissor(rect);
     }
 
     void container::scissor(Nz::Recti const & rect) {
+        base_interface::scissor(rect);
+        if (rect.width >= 0 && rect.height >= 0) {
+            // No constraint applied to elements
+            return;
+        }
         for (auto & elm : elements_) {
-            elm->scissor(rect);
+            Nz::Recti elmscis{ elm->scissor() };
+            if (elmscis.width >= 0 && elmscis.height >= 0) {
+                elmscis.x = std::max(elmscis.x, rect.x);
+                elmscis.y = std::max(elmscis.y, rect.y);
+                elmscis.width = std::min(elmscis.width, rect.width);
+                elmscis.height = std::min(elmscis.height, rect.height);
+            }
+            else {
+                // Element has no constraint but we still apply container's one
+                elmscis = rect;
+            }
+            elm->scissor(elmscis);
         }
     }
 
