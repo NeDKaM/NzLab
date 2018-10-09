@@ -14,7 +14,7 @@
             using owner_type = owner<base_interface>;
 
             std::list<owner_type> elements_;
-            Nz::Vector2f size_;
+            Nz::Vector2f contentsize_;
 
             public:
                 container() = default;
