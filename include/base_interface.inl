@@ -1,6 +1,5 @@
 namespace ex {
 
-    void base_interface::anchor(base_interface const & element, ex::anchor const & value) {
     void base_interface::anchor(Nz::Vector3f const & position, Nz::Vector2f const & size, ex::anchor const & value) {
         anchor_ = value;
         Nz::Vector2f siz{ this->size() };
