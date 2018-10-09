@@ -25,6 +25,7 @@
 
                 virtual void scissor(Nz::Recti const &) = 0;
 
+                void anchor(Nz::Vector3f const &, Nz::Vector2f const &, ex::anchor const &);
                 void anchor(base_interface const &, ex::anchor const &);
                 ex::anchor anchor() const;
         };
