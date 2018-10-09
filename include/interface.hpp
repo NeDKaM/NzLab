@@ -28,7 +28,8 @@
 
             public:
                 interface() = delete;
-                interface(Ndk::World & world, typename Gfx::value_type const & value = Gfx::value_type());
+                interface(Ndk::World & world);
+                interface(Ndk::World & world, typename Gfx::value_type const &);
 
                 interface(interface const &) = delete;
                 interface(interface &&) = default;

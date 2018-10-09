@@ -1,7 +1,7 @@
 namespace ex {
 
     template <typename Gfx>
-    interface<Gfx>::interface(Ndk::World & world, typename Gfx::value_type const & value) {
+    interface<Gfx>::interface(Ndk::World & world) {
         gfx_ = gfx_type::New();
 
         entity_ = world.CreateEntity();
@@ -9,7 +9,11 @@ namespace ex {
                 node.SetParent(this);
             auto & gfx = entity_->AddComponent<Ndk::GraphicsComponent>();
                 gfx.Attach(gfx_);
+    }
 
+    template <typename Gfx>
+    interface<Gfx>::interface(Ndk::World & world, typename Gfx::value_type const & value) 
+        : interface(world) {
         data(value);
     }
 
