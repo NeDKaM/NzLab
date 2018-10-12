@@ -30,13 +30,15 @@
             typename Nz::Signal<Nz::EventHandler const *, typename Event::event_type const &>::ConnectionGuard slot_;
 
             public:
+                using callback_type = std::function<void(typename Event::event_type const &)>;
+
                 event() = delete;
                 event(ex::handle<typename Event::object_type> object, Nz::EventHandlerHandle handle);
                 event(event const &) = delete;
                 event(event &&) = default;
                 ~event() = default;
 
-                void activation(std::function<void()> const & clbk) override;
+                void activation(callback_type const & clbk);
                 bool activation() const override;
         };
 

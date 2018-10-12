@@ -9,7 +9,6 @@
         {
             virtual ~base_event() = default;
 
-            virtual void activation(std::function<void()> const &) = 0;
             virtual bool activation() const = 0;
         };
 

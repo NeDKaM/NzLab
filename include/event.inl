@@ -7,7 +7,7 @@ namespace ex {
     }
 
     template <typename Event>
-    void event<Event>::activation(std::function<void()> const & clbk) {
+    void event<Event>::activation(callback_type const & clbk) {
         if (!clbk) {
             slot_.Disconnect();
             return;
@@ -17,7 +17,7 @@ namespace ex {
                 return;
             }
             if (Event::trigger(*object_.get(), event)) {
-                clbk();
+                clbk(event);
             }
         });
     }
