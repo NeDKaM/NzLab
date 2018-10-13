@@ -3,7 +3,7 @@
 
     #include <NDK/EntityOwner.hpp>
 
-    #include <base_interface.hpp>
+    #include <NzLab/base_interface.hpp>
 
     namespace ex {
 

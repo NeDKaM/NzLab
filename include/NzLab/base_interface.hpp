@@ -3,8 +3,8 @@
 
     #include <Nazara/Utility/Node.hpp>
 
-    #include <anchor.hpp>
-    #include <object.hpp>
+    #include <NzLab/anchor.hpp>
+    #include <NzLab/object.hpp>
 
     namespace ex {
 

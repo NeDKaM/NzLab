@@ -6,9 +6,9 @@
     #include <Nazara/Platform/EventHandler.hpp>
     #include <Nazara/Core/Signal.hpp>
 
-    #include <base_event.hpp>
+    #include <NzLab/base_event.hpp>
 
-    #include <object.hpp>
+    #include <NzLab/object.hpp>
 
     namespace ex {
 
