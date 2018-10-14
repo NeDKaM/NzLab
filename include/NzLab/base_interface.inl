@@ -1,6 +1,9 @@
 namespace ex {
 
-    base_interface::base_interface() {
+    base_interface::base_interface() 
+        : anchor_{ }
+        , padding_{ }
+        , scissor_{ } {
         nodeinvalidated_.Connect(OnNodeInvalidation, [this](Nz::Node const *) {
             Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
             Nz::Recti current{ scissor() };
