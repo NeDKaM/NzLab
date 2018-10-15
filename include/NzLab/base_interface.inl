@@ -4,12 +4,6 @@ namespace ex {
         : anchor_{ }
         , padding_{ }
         , scissor_{ } {
-        nodeinvalidated_.Connect(OnNodeInvalidation, [this](Nz::Node const *) {
-            Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
-            Nz::Recti current{ scissor() };
-            Nz::Recti rect{ pos.x, pos.y, current.width, current.height };
-            scissor(rect);
-        });
     }
 
     void base_interface::anchor(Nz::Vector3f const & position, Nz::Vector2f const & size, ex::anchor const & value) {
@@ -46,5 +40,13 @@ namespace ex {
 
     Nz::Recti base_interface::scissor() const {
         return scissor_;
+    }
+
+    void base_interface::InvalidateNode() {
+        Node::InvalidateNode();
+        Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
+        Nz::Recti current{ scissor() };
+        Nz::Recti rect{ pos.x, pos.y, current.width, current.height };
+        scissor(rect);
     }
 }

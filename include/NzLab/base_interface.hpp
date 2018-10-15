@@ -24,7 +24,6 @@
             ex::anchor anchor_;
             ex::padding padding_;
             Nz::Recti scissor_;
-            Nz::Signal<Nz::Node const *>::ConnectionGuard nodeinvalidated_;
 
             public:
                 base_interface();
@@ -44,6 +43,9 @@
 
                 void padding(ex::padding const &);
                 ex::padding padding() const;
+
+            private:
+                void InvalidateNode() override;
         };
 
     }
