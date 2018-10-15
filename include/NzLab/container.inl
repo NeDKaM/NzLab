@@ -68,6 +68,9 @@ namespace ex {
 
     void container::show(bool value) {
         for (auto & element : elements_) {
+            if (!*element) {
+                continue;
+            }
             element->show(value);
         }
     }
@@ -86,6 +89,9 @@ namespace ex {
             return;
         }
         for (auto & elm : elements_) {
+            if (!*elm) {
+                continue;
+            }
             Nz::Recti elmscis{ elm->scissor() };
             if (elmscis.width >= 0 && elmscis.height >= 0) {
                 elmscis.x = std::max(elmscis.x, rect.x);
