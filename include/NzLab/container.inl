@@ -84,7 +84,7 @@ namespace ex {
 
     void container::scissor(Nz::Recti const & rect) {
         base_interface::scissor(rect);
-        if (rect.width >= 0 && rect.height >= 0) {
+        if (rect.width < 0 && rect.height < 0) {
             // No constraint applied to elements
             return;
         }
