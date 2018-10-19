@@ -45,6 +45,11 @@
 
                 void scissor(bool value);
 
+                template <typename Functor>
+                    void for_each(Functor);
+                template <typename Functor>
+                    void for_each(Functor) const;
+
             private:
                 template <typename Interface>
                     handle<Interface> insert(Interface * element);

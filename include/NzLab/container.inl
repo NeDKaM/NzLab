@@ -107,4 +107,18 @@ namespace ex {
         }
     }
 
+    template <typename Functor>
+    void container::for_each(Functor f) {
+        for (auto const & element : elements_) {
+            f(*element);
+        }
+    }
+
+    template <typename Functor>
+    void container::for_each(Functor f) const {
+        for (auto const & element : elements_) {
+            f(static_cast<base_interface const *>(*element));
+        }
+    }
+
 }
