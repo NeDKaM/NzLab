@@ -23,23 +23,9 @@ namespace ex {
         return {};
     }
 
-    void container::collocate() const
-    {
-        ex::padding pad{ padding() };
-        Nz::Vector3f pos{ GetPosition() + Nz::Vector3f{ pad.left, pad.top, 0.f } };
-
-        for (auto & element : elements_) {
-            if (!*element) {
-                continue;
-            }
-            element->anchor(pos, contentsize_, element->anchor());
-        }
-    }
-
     void container::size(Nz::Vector2f const & value) {
         ex::padding pad{ padding() };
         contentsize_ = value - Nz::Vector2f{ pad.left + pad.right, pad.top + pad.bottom };
-        collocate();
     }
 
     Nz::Vector2f container::size() const {

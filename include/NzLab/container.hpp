@@ -33,8 +33,6 @@
                 template <typename Interface, typename = std::enable_if_t<std::is_base_of_v<base_interface, Interface>>>
                     owner<Interface> release(Interface * element);
 
-                void collocate() const;
-
                 void size(Nz::Vector2f const & value) override;
 
                 Nz::Vector2f size() const override;
