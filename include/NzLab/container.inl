@@ -11,7 +11,7 @@ namespace ex {
     }
 
     template <typename Interface, typename>
-    inline owner<Interface> container::release(Interface * element) {
+    owner<Interface> container::release(Interface * element) {
         if (auto it = std::find_if(elements_.begin(), elements_.end(), [element](owner_type const & elm) { return element == *elm; })
         ; it != elements_.end()) {
             element->SetParent(nullptr);
@@ -53,12 +53,9 @@ namespace ex {
     }
 
     void container::show(bool value) {
-        for (auto & element : elements_) {
-            if (!*element) {
-                continue;
-            }
-            element->show(value);
-        }
+        for_each([value](base_interface * elm) {
+            elm->show(value);
+        });
     }
 
     void container::scissor(bool value) {
@@ -74,10 +71,7 @@ namespace ex {
             // No constraint applied to elements
             return;
         }
-        for (auto & elm : elements_) {
-            if (!*elm) {
-                continue;
-            }
+        for_each([this, &rect](base_interface * elm) {
             Nz::Recti elmscis{ elm->scissor() };
             if (elmscis.width >= 0 && elmscis.height >= 0) {
                 elmscis.x = std::max(elmscis.x, rect.x);
@@ -90,11 +84,14 @@ namespace ex {
                 elmscis = rect;
             }
             elm->scissor(elmscis);
-        }
+        });
     }
 
     template <typename Functor>
     void container::for_each(Functor f) {
+        elements_.erase(std::remove_if(elements_.begin(), elements_.end(), [](owner_type const & elm) {
+            return !elm.valid();
+        }), elements_.end());
         for (auto const & element : elements_) {
             f(*element);
         }
@@ -102,6 +99,9 @@ namespace ex {
 
     template <typename Functor>
     void container::for_each(Functor f) const {
+        elements_.erase(std::remove_if(elements_.begin(), elements_.end(), [](owner_type const & elm) {
+            return !elm.valid();
+        }), elements_.end());
         for (auto const & element : elements_) {
             f(static_cast<base_interface const *>(*element));
         }

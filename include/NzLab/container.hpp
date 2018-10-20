@@ -13,7 +13,7 @@
         {
             using owner_type = owner<base_interface>;
 
-            std::list<owner_type> elements_;
+            mutable std::list<owner_type> elements_;
             Nz::Vector2f contentsize_;
 
             public:
