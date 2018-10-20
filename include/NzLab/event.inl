@@ -17,7 +17,7 @@ namespace ex {
                 return;
             }
             if (Event::trigger(*object_.get(), event)) {
-                clbk(event);
+                clbk(*object_, event);
             }
         });
     }

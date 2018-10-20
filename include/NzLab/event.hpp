@@ -30,7 +30,7 @@
             typename Nz::Signal<Nz::EventHandler const *, typename Event::event_type const &>::ConnectionGuard slot_;
 
             public:
-                using callback_type = std::function<void(typename Event::event_type const &)>;
+                using callback_type = std::function<void(typename Event::object_type *, typename Event::event_type const &)>;
 
                 event() = delete;
                 event(ex::handle<typename Event::object_type> object, Nz::EventHandlerHandle handle);
