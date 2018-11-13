@@ -1,12 +1,16 @@
 namespace ex {
 
-    base_interface::base_interface() 
+    template <typename Events>
+    template <typename... EventsArgs>
+    base_interface<Events>::base_interface(EventsArgs &&... args) 
         : anchor_{ }
         , padding_{ }
-        , scissor_{ } {
+        , scissor_{ }
+        , events_{ std::forward<EventsArgs>(args)... } {
     }
 
-    void base_interface::anchor(Nz::Vector3f const & position, Nz::Vector2f const & size, ex::anchor const & value) {
+    template <typename Events>
+    void base_interface<Events>::anchor(Nz::Vector3f const & position, Nz::Vector2f const & size, ex::anchor const & value) {
         anchor_ = value;
         Nz::Vector2f siz{ this->size() };
         SetInitialPosition(size * anchor_.min + Nz::Vector2f{ position });
@@ -16,37 +20,50 @@ namespace ex {
         });
     }
 
-    void base_interface::anchor(base_interface const & element, ex::anchor const & value) {
+    template <typename Events>
+    void base_interface<Events>::anchor(base_interface const & element, ex::anchor const & value) {
         anchor(element.GetPosition(), element.size(), value);
     }
 
-    ex::anchor base_interface::anchor() const {
+    template <typename Events>
+    ex::anchor base_interface<Events>::anchor() const {
         return anchor_;
     }
 
-    void base_interface::padding(ex::padding const & value) {
+    template <typename Events>
+    void base_interface<Events>::padding(ex::padding const & value) {
         Nz::Vector2f siz{ size() };
         padding_ = value;
         size(siz);
     }
 
-    ex::padding base_interface::padding() const {
+    template <typename Events>
+    ex::padding base_interface<Events>::padding() const {
         return padding_;
     }
 
-    void base_interface::scissor(Nz::Recti const & value) {
+    template <typename Events>
+    void base_interface<Events>::scissor(Nz::Recti const & value) {
         scissor_ = value;
     }
 
-    Nz::Recti base_interface::scissor() const {
+    template <typename Events>
+    Nz::Recti base_interface<Events>::scissor() const {
         return scissor_;
     }
 
-    void base_interface::InvalidateNode() {
+    template <typename Events>
+    void base_interface<Events>::InvalidateNode() {
         Node::InvalidateNode();
         Nz::Vector2i pos{ Nz::Vector2f{ GetPosition() } };
         Nz::Recti current{ scissor() };
         Nz::Recti rect{ pos.x, pos.y, current.width, current.height };
         scissor(rect);
     }
+
+    template <typename Events>
+    Events & base_interface<Events>::events() {
+        return events_;
+    }
+
 }

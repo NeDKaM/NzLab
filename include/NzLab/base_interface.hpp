@@ -16,17 +16,22 @@
                 return { 0.f, 0.f, 0.f, 0.f };
             };
         };
-
+    
+        template <typename Events>
         class base_interface
             : public Nz::Node
-            , public object<base_interface>
+            , public object<base_interface<Events>>
         {
             ex::anchor anchor_;
             ex::padding padding_;
             Nz::Recti scissor_;
+            Events events_;
 
             public:
-                base_interface();
+                using events_type = Events;
+
+                template <typename... EventsArgs>
+                    base_interface(EventsArgs &&... args);
                 virtual ~base_interface() = default;
 
                 virtual Nz::Vector2f size() const = 0;
@@ -43,6 +48,8 @@
 
                 void padding(ex::padding const &);
                 ex::padding padding() const;
+
+                Events & events();
 
             private:
                 void InvalidateNode() override;

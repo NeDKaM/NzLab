@@ -4,6 +4,7 @@
     #include <NDK/EntityOwner.hpp>
 
     #include <NzLab/base_interface.hpp>
+    #include <NzLab/style.hpp>
 
     namespace ex {
 
@@ -19,9 +20,9 @@
         //    static Nz::Vector2f size(object_type const &);
         //};
 
-        template <typename Gfx>
+        template <typename Gfx, typename Events>
         class interface 
-            : public base_interface
+            : public base_interface<Events>
         {
             using gfx_type = typename Gfx::object_type;
 
@@ -30,9 +31,8 @@
 
             public:
                 interface() = delete;
-                interface(Ndk::World & world);
-                interface(Ndk::World & world, typename Gfx::value_type const &);
-
+                template <typename... EventsArgs>
+                    interface(Ndk::World &, EventsArgs &&...);
                 interface(interface const &) = delete;
                 interface(interface &&) = default;
                 ~interface() = default;
@@ -50,7 +50,6 @@
 
                 void style(style<Gfx> &);
 
-            private:
                 void scissor(Nz::Recti const &) override;
         };
 
