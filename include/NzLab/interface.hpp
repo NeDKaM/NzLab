@@ -55,7 +55,7 @@
 
     }
 
-    #include "interface.inl"
+    #include <NzLab/interface.inl>
 
 #endif /* HPP_EX_INTERFACE_INCLUDED */
 

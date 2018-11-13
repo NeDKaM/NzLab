@@ -115,7 +115,7 @@
         };
 
         template <typename T, typename... Args>
-        owner<T> make_owner(Args&&... args);
+            owner<T> make_owner(Args&&... args);
 
     }
 
@@ -126,6 +126,6 @@
 
     }
 
-    #include "object.inl"
+    #include <NzLab/object.inl>
 
 #endif /* HPP_EX_OBJECT_INCLUDED */

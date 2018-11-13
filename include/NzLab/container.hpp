@@ -57,6 +57,6 @@
 
     }
 
-    #include "container.inl"
+    #include <NzLab/container.inl>
 
 #endif /* HPP_EX_CONTAINER_INCLUDED */
