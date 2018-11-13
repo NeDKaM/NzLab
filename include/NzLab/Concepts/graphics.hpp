@@ -1,5 +1,5 @@
-#ifndef HPP_CONCEPTS_GRAPHICS_INCLUDED
-#define HPP_CONCEPTS_GRAPHICS_INCLUDED
+#ifndef HPP_EX_CONCEPTS_GRAPHICS_INCLUDED
+#define HPP_EX_CONCEPTS_GRAPHICS_INCLUDED
 
     #include <Nazara/Utility/AbstractTextDrawer.hpp>
     #include <Nazara/Graphics/TextSprite.hpp>
@@ -45,4 +45,4 @@
 
     }
 
-#endif /* HPP_CONCEPTS_GRAPHICS_INCLUDED */
+#endif /* HPP_EX_CONCEPTS_GRAPHICS_INCLUDED */

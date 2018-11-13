@@ -1,5 +1,5 @@
-#ifndef HPP_BASE_INTERFACE_INCLUDED
-#define HPP_BASE_INTERFACE_INCLUDED
+#ifndef HPP_EX_BASE_INTERFACE_INCLUDED
+#define HPP_EX_BASE_INTERFACE_INCLUDED
 
     #include <Nazara/Utility/Node.hpp>
 
@@ -52,4 +52,4 @@
 
     #include "base_interface.inl"
 
-#endif /* HPP_BASE_INTERFACE_INCLUDED */
+#endif /* HPP_EX_BASE_INTERFACE_INCLUDED */

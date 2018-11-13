@@ -1,5 +1,5 @@
-#ifndef HPP_CONTAINER_INCLUDED
-#define HPP_CONTAINER_INCLUDED
+#ifndef HPP_EX_CONTAINER_INCLUDED
+#define HPP_EX_CONTAINER_INCLUDED
     
     #include <list>
 
@@ -59,4 +59,4 @@
 
     #include "container.inl"
 
-#endif /* HPP_CONTAINER_INCLUDED */
+#endif /* HPP_EX_CONTAINER_INCLUDED */

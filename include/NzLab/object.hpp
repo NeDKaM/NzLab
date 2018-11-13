@@ -1,5 +1,5 @@
-#ifndef HPP_OBJECT_INCLUDED
-#define HPP_OBJECT_INCLUDED
+#ifndef HPP_EX_OBJECT_INCLUDED
+#define HPP_EX_OBJECT_INCLUDED
     
     #include <vector>
 
@@ -128,4 +128,4 @@
 
     #include "object.inl"
 
-#endif /* HPP_OBJECT_INCLUDED */
+#endif /* HPP_EX_OBJECT_INCLUDED */

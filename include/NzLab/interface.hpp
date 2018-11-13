@@ -1,5 +1,5 @@
-#ifndef HPP_INTERFACE_INCLUDED
-#define HPP_INTERFACE_INCLUDED
+#ifndef HPP_EX_INTERFACE_INCLUDED
+#define HPP_EX_INTERFACE_INCLUDED
 
     #include <NDK/EntityOwner.hpp>
 
@@ -54,5 +54,5 @@
 
     #include "interface.inl"
 
-#endif /* HPP_INTERFACE_INCLUDED */
+#endif /* HPP_EX_INTERFACE_INCLUDED */
 
