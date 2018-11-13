@@ -47,6 +47,7 @@
                 void size(Nz::Vector2f const & value);
 
                 void show(bool value) override;
+                void style(style<Gfx> &);
 
             private:
                 void scissor(Nz::Recti const &) override;
