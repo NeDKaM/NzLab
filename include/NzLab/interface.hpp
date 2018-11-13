@@ -46,7 +46,8 @@
 
                 void size(Nz::Vector2f const &);
 
-                void show(bool value) override;
+                void show(bool) override;
+
                 void style(style<Gfx> &);
 
             private:

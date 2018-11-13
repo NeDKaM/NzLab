@@ -50,7 +50,7 @@
 
             private:
                 template <typename Interface>
-                    handle<Interface> insert(Interface * element);
+                    handle<Interface> insert(Interface *);
 
                 void scissor(Nz::Recti const &) override;
         };
