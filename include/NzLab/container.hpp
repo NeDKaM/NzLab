@@ -33,15 +33,15 @@
                 template <typename Interface, typename = std::enable_if_t<std::is_base_of_v<base_interface, Interface>>>
                     owner<Interface> release(Interface * element);
 
-                void size(Nz::Vector2f const & value) override;
+                void size(Nz::Vector2f const &) override;
 
                 Nz::Vector2f size() const override;
 
                 std::size_t count() const;
 
-                void show(bool value) override;
+                void show(bool) override;
 
-                void scissor(bool value);
+                void scissor(bool);
 
                 template <typename Functor>
                     void for_each(Functor);

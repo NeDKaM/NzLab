@@ -44,7 +44,7 @@
 
                 Nz::Vector2f size() const override;
 
-                void size(Nz::Vector2f const & value);
+                void size(Nz::Vector2f const &);
 
                 void show(bool value) override;
                 void style(style<Gfx> &);

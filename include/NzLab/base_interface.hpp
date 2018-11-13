@@ -32,7 +32,7 @@
                 virtual Nz::Vector2f size() const = 0;
                 virtual void size(Nz::Vector2f const &) = 0;
 
-                virtual void show(bool value) = 0;
+                virtual void show(bool) = 0;
 
                 virtual void scissor(Nz::Recti const &);
                 Nz::Recti scissor() const;
