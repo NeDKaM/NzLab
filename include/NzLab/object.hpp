@@ -33,6 +33,7 @@
                 base_handle & swap(base_handle & handle);
 
                 bool valid() const;
+                explicit operator bool() const;
 
                 Base * get() const;
 
@@ -53,6 +54,7 @@
 
             public:
                 using base::base_handle;
+                using base::operator =;
 
                 T * get() const;
                 T * operator ->() const;
