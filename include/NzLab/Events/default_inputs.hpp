@@ -4,9 +4,9 @@
     #include <Nazara/Core/Signal.hpp>
     #include <Nazara/Platform/Event.hpp>
 
-    #include <NzLab/container.hpp>
-
     namespace ex {
+
+        template <typename ElementType, typename Events> class container;
 
         namespace events {
             
@@ -15,66 +15,77 @@
                 Nz::Signal<int /*x*/, int /*y*/, int /*dx*/, int /*dy*/> mouse_moved;
                 Nz::Signal<> enter;
                 Nz::Signal<> exit;
+
+                Nz::Signal<Nz::Mouse::Button, int /*x*/, int /*y*/> button_pressed;
+                Nz::Signal<Nz::Mouse::Button, int /*x*/, int /*y*/> button_released;
+
+                Nz::Signal<Nz::WindowEvent::KeyEvent const &> key_pressed;
+                Nz::Signal<Nz::WindowEvent::KeyEvent const &> key_released;
+                Nz::Signal<char32_t, bool /*repeated*/> text_entered;
+
+                Nz::Signal<> focus_gained;
+                Nz::Signal<> focus_lost;
+            };
+
+            template <typename Events, typename ElementType>
+            struct dispatcher
+            {
+                explicit dispatcher(ex::container<ElementType, Events> *);
+
+                void mouse_moved(int, int, int, int);
+                void enter();
+                void exit();
+                void button_pressed(Nz::Mouse::Button, int, int);
+                void button_released(Nz::Mouse::Button, int, int);
+                void key_pressed(Nz::WindowEvent::KeyEvent const &);
+                void key_released(Nz::WindowEvent::KeyEvent const &);
+                void text_entered(char32_t, bool);
+                void focus_gained();
+                void focus_lost();
+
+                void keyboard_owner(ElementType *);
+
+                protected:
+                    ex::container<ElementType, Events> * container_;
+                    ex::handle<ElementType> hovered_;
+                    ex::handle<ElementType> kb_owner_;
             };
 
             template <typename ElementType>
-            class default_inputs_forward
-                : public ElementType::events_type
+            class default_inputs_dispatch
+                : public dispatcher<default_inputs_dispatch<ElementType>, ElementType>
             {
-                ex::container<ElementType, default_inputs_forward> * container_;
-                ElementType * hovered_;
+                Nz::EventHandlerHandle h_events_;
 
-            public:
-                default_inputs_forward(ex::container<ElementType, default_inputs_forward> * cont, Nz::EventHandler & events)
-                    : container_{ cont }
-                    , hovered_{ nullptr } {
-                    slot_mouse_moved.Connect(events.OnMouseMoved, this, &default_inputs_forward::on_mouse_moved);
-                }
+                public:
+                    explicit default_inputs_dispatch(ex::container<ElementType, default_inputs_dispatch> *, Nz::EventHandlerHandle);
 
-            protected:
-                template <typename... Args>
-                using slot_type = typename Nz::Signal<Nz::EventHandler const *, Args...>::ConnectionGuard;
+                protected:
+                    template <typename... Args>
+                        using slot_type = typename Nz::Signal<Nz::EventHandler const *, Args...>::ConnectionGuard;
 
-                slot_type<Nz::WindowEvent::MouseMoveEvent const &> slot_mouse_moved;
+                    slot_type<Nz::WindowEvent::MouseMoveEvent const &> slot_mouse_moved;
+                    slot_type<> slot_mouse_exit;
+                    slot_type<Nz::WindowEvent::MouseButtonEvent const &> slot_button_pressed;
+                    slot_type<Nz::WindowEvent::MouseButtonEvent const &> slot_button_released;
+                    slot_type<Nz::WindowEvent::KeyEvent const &> slot_key_pressed;
+                    slot_type<Nz::WindowEvent::KeyEvent const &> slot_key_released;
+                    slot_type<Nz::WindowEvent::TextEvent const &> slot_text_entered;
 
-            private:
-                void on_mouse_moved(Nz::EventHandler const *, Nz::WindowEvent::MouseMoveEvent const & ev) {
-                    // mouse move handling, as it is done in Nazara
-                    ElementType * element{ nullptr };
-                    float best_area{ std::numeric_limits<float>::infinity() };
-                    container_->for_each([&](ElementType * elm) {
-                        auto position{ Nz::Vector3i{ elm->GetPosition() } };
-                        auto size{ elm->size() };
-                        Nz::Recti elm_area{ position.x, position.y, static_cast<int>(size.x), static_cast<int>(size.y) };
-                        if (elm_area.Contains(ev.x, ev.y)) {
-                            float area{ size.x * size.y };
-                            if (area < best_area) {
-                                best_area = area;
-                                element = elm;
-                            }
-                        }
-                    });
-                    if (element) {
-                        if (element != hovered_) {
-                            if (hovered_) {
-                                hovered_->events().exit();
-                            }
-                            hovered_ = element;
-                            hovered_->events().enter();
-                        }
-                        auto x{ static_cast<int>(std::round(ev.x - element->GetPosition().x)) };
-                        auto y{ static_cast<int>(std::round(ev.y - element->GetPosition().y)) };
-                        hovered_->events().mouse_moved(x, y, ev.deltaX, ev.deltaY);
-                    }
-                    else if (hovered_) {
-                        hovered_->events().exit();
-                        hovered_ = nullptr;
-                    }
-                }
+                private:
+                    void on_mouse_moved(Nz::EventHandler const *, Nz::WindowEvent::MouseMoveEvent const &);
+                    void on_mouse_exit(Nz::EventHandler const *);
+                    void on_button_pressed(Nz::EventHandler const *, Nz::WindowEvent::MouseButtonEvent const &);
+                    void on_button_released(Nz::EventHandler const *, Nz::WindowEvent::MouseButtonEvent const &);
+                    void on_key_pressed(Nz::EventHandler const *, Nz::WindowEvent::KeyEvent const &);
+                    void on_key_released(Nz::EventHandler const *, Nz::WindowEvent::KeyEvent const &);
+                    void on_text_entered(Nz::EventHandler const *, Nz::WindowEvent::TextEvent const &);
             };
 
         }
 
     }
+
+    #include <NzLab/Events/default_inputs.inl>
 
 #endif
