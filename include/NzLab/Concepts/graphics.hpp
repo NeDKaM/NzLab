@@ -47,7 +47,7 @@
                 return obj;
             }
 
-            static void apply(Nz::SpriteRef const & sprite, std::string const & path) {
+            static void data(Nz::SpriteRef const & sprite, std::string const & path) {
                 sprite->SetTexture(Nz::TextureManager::Get(path));
             }
 

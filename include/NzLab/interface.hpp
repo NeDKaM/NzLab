@@ -15,7 +15,7 @@
         //
         //    static std::unique_ptr<object_type> make();
         //    static Nz::InstancedRenderableRef renderable(object_type const &);
-        //    static void apply(object_type &, value_type const &);
+        //    static void data(object_type &, value_type const &);
         //    static void size(object_type &, Nz::Vector2f const &);
         //    static Nz::Vector2f size(object_type const &);
         //};
