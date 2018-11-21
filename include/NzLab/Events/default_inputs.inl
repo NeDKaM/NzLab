@@ -2,10 +2,10 @@ namespace ex {
 
     namespace events {
 
-        // dispatcher
+        // default_dispatcher
 
         template <typename Events, typename ElementType>
-        dispatcher<Events, ElementType>::dispatcher(ex::container<ElementType, Events> * cont)
+        default_dispatcher<Events, ElementType>::default_dispatcher(ex::container<ElementType, Events> * cont)
             : container_{ cont }
             , hovered_{ nullptr }
             , kb_owner_{ nullptr } {
@@ -16,7 +16,7 @@ namespace ex {
         */
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::keyboard_owner(ElementType * elm) {
+        void default_dispatcher<Events, ElementType>::keyboard_owner(ElementType * elm) {
             if (elm != kb_owner_) {
                 if (kb_owner_) {
                     kb_owner_->events().focus_lost();
@@ -29,7 +29,7 @@ namespace ex {
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::mouse_moved(int x, int y, int dx, int dy) {
+        void default_dispatcher<Events, ElementType>::mouse_moved(int x, int y, int dx, int dy) {
             ElementType * element{ nullptr };
             float best_area{ std::numeric_limits<float>::infinity() };
             container_->for_each([&](ElementType * elm) {
@@ -63,12 +63,12 @@ namespace ex {
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::enter() {
+        void default_dispatcher<Events, ElementType>::enter() {
 
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::exit() {
+        void default_dispatcher<Events, ElementType>::exit() {
             if (hovered_) {
                 hovered_->events().exit();
                 hovered_.reset();
@@ -76,7 +76,7 @@ namespace ex {
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::button_pressed(Nz::Mouse::Button btn, int x, int y) {
+        void default_dispatcher<Events, ElementType>::button_pressed(Nz::Mouse::Button btn, int x, int y) {
             if (hovered_) {
                 auto lx{ static_cast<int>(std::round(x - hovered_->GetPosition().x)) };
                 auto ly{ static_cast<int>(std::round(y - hovered_->GetPosition().y)) };
@@ -85,7 +85,7 @@ namespace ex {
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::button_released(Nz::Mouse::Button btn, int x, int y) {
+        void default_dispatcher<Events, ElementType>::button_released(Nz::Mouse::Button btn, int x, int y) {
             if (hovered_) {
                 auto lx{ static_cast<int>(std::round(x - hovered_->GetPosition().x)) };
                 auto ly{ static_cast<int>(std::round(y - hovered_->GetPosition().y)) };
@@ -94,33 +94,33 @@ namespace ex {
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::key_pressed(Nz::WindowEvent::KeyEvent const & ev) {
+        void default_dispatcher<Events, ElementType>::key_pressed(Nz::WindowEvent::KeyEvent const & ev) {
             if (kb_owner_) {
                 kb_owner_->events().key_pressed(ev);
             }
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::key_released(Nz::WindowEvent::KeyEvent const & ev) {
+        void default_dispatcher<Events, ElementType>::key_released(Nz::WindowEvent::KeyEvent const & ev) {
             if (kb_owner_) {
                 kb_owner_->events().key_released(ev);
             }
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::text_entered(char32_t ch, bool repeat) {
+        void default_dispatcher<Events, ElementType>::text_entered(char32_t ch, bool repeat) {
             if (kb_owner_) {
                 kb_owner_->events().text_entered(ch, repeat);
             }
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::focus_gained() {
+        void default_dispatcher<Events, ElementType>::focus_gained() {
 
         }
 
         template <typename Events, typename ElementType>
-        void dispatcher<Events, ElementType>::focus_lost() {
+        void default_dispatcher<Events, ElementType>::focus_lost() {
 
         }
 
@@ -128,7 +128,7 @@ namespace ex {
 
         template <typename ElementType>
         default_inputs_dispatch<ElementType>::default_inputs_dispatch(ex::container<ElementType, default_inputs_dispatch> * cont, Nz::EventHandlerHandle events)
-            : dispatcher(cont)
+            : default_dispatcher(cont)
             , h_events_{ std::move(events) } {
             slot_mouse_moved.Connect(h_events_->OnMouseMoved, this, &default_inputs_dispatch::on_mouse_moved);
             slot_mouse_exit.Connect(h_events_->OnMouseLeft, this, &default_inputs_dispatch::on_mouse_exit);
