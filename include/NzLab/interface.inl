@@ -9,7 +9,7 @@ namespace ex {
             auto & node = entity_->AddComponent<Ndk::NodeComponent>();
                 node.SetParent(this);
             auto & gfx = entity_->AddComponent<Ndk::GraphicsComponent>();
-                gfx.Attach(Gfx::renderable(*gfx_.get()));
+                Gfx::attach(*gfx_.get(), gfx);
     }
 
     template <typename Gfx, typename Events>

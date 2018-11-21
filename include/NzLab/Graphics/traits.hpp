@@ -1,11 +1,13 @@
 #ifndef HPP_EX_CONCEPTS_GRAPHICS_INCLUDED
 #define HPP_EX_CONCEPTS_GRAPHICS_INCLUDED
 
-    #include <Nazara/Utility/AbstractTextDrawer.hpp>
+    #include <Nazara/Utility/SimpleTextDrawer.hpp>
     #include <Nazara/Graphics/TextSprite.hpp>
     #include <Nazara/Graphics/Sprite.hpp>
 
-    namespace ex::graphics {
+    #include <NzLab/Graphics/sliced_sprite.hpp>
+
+    namespace ex::graphics::traits {
         
         struct text
         {
@@ -16,8 +18,8 @@
                 return std::make_unique<object_type>(Nz::TextSprite::New(), Nz::SimpleTextDrawer{ });
             }
 
-            static Nz::InstancedRenderableRef renderable(object_type const & obj) {
-                return obj.first;
+            static void attach(object_type const & obj, Ndk::GraphicsComponent & comp) {
+                comp.Attach(obj.first);
             }
 
             static void data(object_type & sprite, std::string const & value) {
@@ -43,8 +45,8 @@
                 return std::make_unique<Nz::SpriteRef>(Nz::Sprite::New());
             }
 
-            static Nz::InstancedRenderableRef renderable(Nz::SpriteRef const & obj) {
-                return obj;
+            static void attach(object_type const & obj, Ndk::GraphicsComponent & comp) {
+                comp.Attach(obj);
             }
 
             static void data(Nz::SpriteRef const & sprite, std::string const & path) {
