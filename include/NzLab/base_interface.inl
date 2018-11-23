@@ -21,7 +21,8 @@ namespace ex {
     }
 
     template <typename Events>
-    void base_interface<Events>::anchor(base_interface const & element, ex::anchor const & value) {
+    template <typename Interface>
+    void base_interface<Events>::anchor(Interface const & element, ex::anchor const & value) {
         anchor(element.GetPosition(), element.size(), value);
     }
 

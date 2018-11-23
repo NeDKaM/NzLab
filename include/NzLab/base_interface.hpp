@@ -43,7 +43,8 @@
                 Nz::Recti scissor() const;
 
                 void anchor(Nz::Vector3f const &, Nz::Vector2f const &, ex::anchor const &);
-                void anchor(base_interface const &, ex::anchor const &);
+                template <typename Interface>
+                    void anchor(Interface const &, ex::anchor const &);
                 ex::anchor anchor() const;
 
                 void padding(ex::padding const &);
