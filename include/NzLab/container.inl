@@ -87,12 +87,12 @@ namespace ex {
     template <typename ElementType, typename Events>
     void container<ElementType, Events>::scissor(Nz::Recti const & rect) {
         base_interface<Events>::scissor(rect);
-        if (rect.width < 0 && rect.height < 0) {
+        if (rect.width < 0 || rect.height < 0) {
             // No constraint applied to elements
             return;
         }
         for_each([this, &rect](ElementType * elm) {
-            Nz::Recti elmscis{ static_cast<ex::base_interface<typename ElementType::events_type> * const>(elm)->scissor() };
+            Nz::Recti elmscis{ elm->scissor() };
             if (elmscis.width >= 0 && elmscis.height >= 0) {
                 elmscis.x = std::max(elmscis.x, rect.x);
                 elmscis.y = std::max(elmscis.y, rect.y);
