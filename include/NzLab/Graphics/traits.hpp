@@ -62,6 +62,34 @@
             }
         };
 
+        struct sliced_image
+        {
+            using object_type = ex::graphics::sliced_sprite::ref;
+            using value_type = std::string;
+
+            static std::unique_ptr<object_type> make() {
+                return std::make_unique<object_type>(ex::graphics::sliced_sprite::make());
+            }
+
+            static void attach(object_type const & obj, Ndk::GraphicsComponent & comp) {
+                obj->for_each([&](Nz::SpriteRef const & sprite) {
+                    comp.Attach(sprite);
+                });
+            }
+
+            static void data(object_type const & sprite, std::string const & path) {
+                sprite->texture(Nz::TextureManager::Get(path));
+            }
+
+            static void size(object_type const & sprite, Nz::Vector2f const & value) {
+                sprite->size(value);
+            }
+
+            static Nz::Vector2f size(object_type const & sprite) {
+                return sprite->size();
+            }
+        };
+
     }
 
 #endif /* HPP_EX_CONCEPTS_GRAPHICS_INCLUDED */
