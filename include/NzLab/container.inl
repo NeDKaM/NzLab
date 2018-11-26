@@ -40,6 +40,9 @@ namespace ex {
     void container<ElementType, Events>::size(Nz::Vector2f const & value) {
         ex::padding pad{ padding() };
         contentsize_ = value - Nz::Vector2f{ pad.left + pad.right, pad.top + pad.bottom };
+        for_each([&](ElementType * elm) {
+            elm->SetInitialPosition({ pad.left, pad.top, 0.f });
+        });
     }
 
     template <typename ElementType, typename Events>
