@@ -184,7 +184,7 @@ private:
   /// Previous animation time in seconds.
   Time       _previous_time = 0;
   /// Animation start time in seconds. Time from which Sequence is evaluated.
-  /// Use to apply a delay.
+  /// Use to data a delay.
   Time       _start_time = 0;
   /// True iff this item was cancelled.
   bool       _cancelled = false;
