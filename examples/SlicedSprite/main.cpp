@@ -32,11 +32,11 @@ int main() {
     using Container = ex::container<ex::base_interface<ex::events::default_inputs>, ex::events::default_inputs>;
 
     Container container;
-        auto div1{ container->insert<SlicedSprite>(world) };
+        auto div1{ container.insert<SlicedSprite>(world) };
             div1->data("output-107.png");
             div1->anchor(*cont.get(), ex::anchor{ { 0.1f, 0.1f }, { 0.9f, 0.5f } });
             div1->style(slice);      
-        auto div2{ container->insert<SlicedSprite>(world) };
+        auto div2{ container.insert<SlicedSprite>(world) };
             div2->data("output-107.png");
             div2->anchor(*cont.get(), ex::anchor::ease({ 0.1f, 0.9f }, { 0.5f, 0.9f }));
 
