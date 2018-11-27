@@ -44,10 +44,11 @@ namespace ex {
         base_interface<Events>::scissor(rect);
         entity_->GetComponent<Ndk::GraphicsComponent>().SetScissorRect(rect);
     }
-    
+
     template <typename Gfx, typename Events>
-    void interface<Gfx, Events>::style(ex::style<Gfx> & opt) {
-        opt.apply(*gfx_.get());
+    template <typename Style>
+    void interface<Gfx, Events>::style(Style s) {
+        s(*gfx_.get());
         size(size());
     }
 

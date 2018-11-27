@@ -4,7 +4,6 @@
     #include <NDK/EntityOwner.hpp>
 
     #include <NzLab/base_interface.hpp>
-    #include <NzLab/style.hpp>
 
     namespace ex {
 
@@ -48,7 +47,8 @@
 
                 void show(bool) override;
 
-                void style(style<Gfx> &);
+                template <typename Style>
+                    void style(Style);
 
                 void scissor(Nz::Recti const &) override;
         };

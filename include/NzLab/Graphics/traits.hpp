@@ -22,13 +22,13 @@
                 comp.Attach(obj.first);
             }
 
-            static void data(object_type & sprite, std::string const & value) {
-                sprite.second.SetText(value);
-                sprite.first->Update(sprite.second);
+            static void data(object_type & text, std::string const & value) {
+                text.second.SetText(value);
+                text.first->Update(text.second);
             }
 
-            static void size(object_type &, Nz::Vector2f const &) {
-                // Nothing to do as a text sprite can't change its size
+            static void size(object_type & text, Nz::Vector2f const & value) {
+                // scale ?
             }
 
             static Nz::Vector2f size(object_type const & sprite) {
