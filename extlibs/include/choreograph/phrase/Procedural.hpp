@@ -42,7 +42,7 @@ class ProceduralPhrase : public Phrase<T>
 public:
   /// Analytic Function receives start, end, and normalized time.
   /// Most basic would be mix( a, b, t ) or lerp( a, b, t ).
-  /// Intended use is to apply something like cos() or random jitter.
+  /// Intended use is to data something like cos() or random jitter.
   using Function = std::function<T (Time normalizedTime, Time duration)>;
 
   ProceduralPhrase( Time duration, const Function &fn ):

@@ -1,5 +1,5 @@
-#ifndef HPP_OBJECT_INCLUDED
-#define HPP_OBJECT_INCLUDED
+#ifndef HPP_EX_OBJECT_INCLUDED
+#define HPP_EX_OBJECT_INCLUDED
     
     #include <vector>
 
@@ -33,6 +33,7 @@
                 base_handle & swap(base_handle & handle);
 
                 bool valid() const;
+                explicit operator bool() const;
 
                 Base * get() const;
 
@@ -53,6 +54,7 @@
 
             public:
                 using base::base_handle;
+                using base::operator =;
 
                 T * get() const;
                 T * operator ->() const;
@@ -115,7 +117,7 @@
         };
 
         template <typename T, typename... Args>
-        owner<T> make_owner(Args&&... args);
+            owner<T> make_owner(Args&&... args);
 
     }
 
@@ -126,6 +128,6 @@
 
     }
 
-    #include "object.inl"
+    #include <NzLab/object.inl>
 
-#endif /* HPP_OBJECT_INCLUDED */
+#endif /* HPP_EX_OBJECT_INCLUDED */

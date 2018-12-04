@@ -135,7 +135,7 @@ public:
   SelfT& cutIn( Time t ) { _motion.cutIn( t ); return *this; }
 
   /// Clip the motion at time \t from the beginning of the Motion's Sequence.
-  /// When used after Timeline::apply, will have the same effect as cutIn().
+  /// When used after Timeline::data, will have the same effect as cutIn().
   SelfT& cutAt( Time t ) { _motion.sliceSequence( 0, t ); return *this; }
 
   //=================================================

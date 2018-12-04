@@ -1,5 +1,5 @@
-#ifndef HPP_ANCHOR_INCLUDED
-#define HPP_ANCHOR_INCLUDED
+#ifndef HPP_EX_ANCHOR_INCLUDED
+#define HPP_EX_ANCHOR_INCLUDED
 
     #include <Nazara/Math/Vector2.hpp>
 
@@ -23,5 +23,5 @@
 
     }
 
-#endif /* HPP_ANCHOR_INCLUDED */
+#endif /* HPP_EX_ANCHOR_INCLUDED */
 

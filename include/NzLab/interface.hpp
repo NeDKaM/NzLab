@@ -1,5 +1,5 @@
-#ifndef HPP_INTERFACE_INCLUDED
-#define HPP_INTERFACE_INCLUDED
+#ifndef HPP_EX_INTERFACE_INCLUDED
+#define HPP_EX_INTERFACE_INCLUDED
 
     #include <NDK/EntityOwner.hpp>
 
@@ -7,30 +7,31 @@
 
     namespace ex {
 
-        //struct gfx_concept
+        //struct gfx_traits
         //{
         //    class object_type;
         //    class value_type;
-
-        //    static void apply(Nz::ObjectRef<object_type> const &, value_type const &);
-        //    static void size(Nz::ObjectRef<object_type> const &, Nz::Vector2f const &);
-        //    static Nz::Vector2f size(Nz::ObjectRef<object_type> const &);
+        //
+        //    static std::unique_ptr<object_type> make();
+        //    static void attach(object_type const &, Ndk::GraphicsComponent &);
+        //    static void data(object_type &, value_type const &);
+        //    static void size(object_type &, Nz::Vector2f const &);
+        //    static Nz::Vector2f size(object_type const &);
         //};
 
-        template <typename Gfx>
+        template <typename Gfx, typename Events>
         class interface 
-            : public base_interface
+            : public base_interface<Events>
         {
-            using gfx_type = std::enable_if_t<std::is_base_of_v<Nz::InstancedRenderable, typename Gfx::object_type>, typename Gfx::object_type>;
+            using gfx_type = typename Gfx::object_type;
 
             Ndk::EntityOwner entity_;
-            Nz::ObjectRef<gfx_type> gfx_;
+            std::unique_ptr<gfx_type> gfx_;
 
             public:
                 interface() = delete;
-                interface(Ndk::World & world);
-                interface(Ndk::World & world, typename Gfx::value_type const &);
-
+                template <typename... EventsArgs>
+                    interface(Ndk::World &, EventsArgs &&...);
                 interface(interface const &) = delete;
                 interface(interface &&) = default;
                 ~interface() = default;
@@ -38,21 +39,23 @@
                 interface & operator =(interface const &) = delete;
                 interface & operator =(interface &&) = default;
 
-                void data(typename Gfx::value_type const & value);
+                void data(typename Gfx::value_type const &);
 
                 Nz::Vector2f size() const override;
 
-                void size(Nz::Vector2f const & value);
+                void size(Nz::Vector2f const &);
 
-                void show(bool value) override;
+                void show(bool) override;
 
-            private:
+                template <typename Style>
+                    void style(Style);
+
                 void scissor(Nz::Recti const &) override;
         };
 
     }
 
-    #include "interface.inl"
+    #include <NzLab/interface.inl>
 
-#endif /* HPP_INTERFACE_INCLUDED */
+#endif /* HPP_EX_INTERFACE_INCLUDED */
 

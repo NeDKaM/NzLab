@@ -162,7 +162,7 @@ public:
   }
 
 private:
-  // Function to apply to values.
+  // Function to data to values.
   CombineFunction           _reduce_fn;
   // Phrases to reduce.
   std::vector<PhraseRef<T>> _sources;

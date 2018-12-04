@@ -1,5 +1,5 @@
-#ifndef HPP_CONTAINER_INCLUDED
-#define HPP_CONTAINER_INCLUDED
+#ifndef HPP_EX_CONTAINER_INCLUDED
+#define HPP_EX_CONTAINER_INCLUDED
     
     #include <list>
 
@@ -8,16 +8,18 @@
 
     namespace ex {
 
+        template <typename ElementType, typename Events>
         class container
-            : public base_interface
+            : public base_interface<Events>
         {
-            using owner_type = owner<base_interface>;
+            using owner_type = owner<ElementType>;
 
             mutable std::list<owner_type> elements_;
             Nz::Vector2f contentsize_;
 
             public:
-                container() = default;
+                template <typename... EventsArgs>
+                    container(EventsArgs &&...);
                 container(container const &) = delete;
                 container(container &&) = default;
                 ~container() = default;
@@ -25,23 +27,23 @@
                 container & operator =(container const &) = delete;
                 container & operator =(container &&) = default;
 
-                template <typename Interface, typename = std::enable_if_t<std::is_base_of_v<base_interface, Interface>>>
-                    handle<Interface> insert(owner<Interface> && owner);
-                template <typename Interface, typename... Args, typename = std::enable_if_t<std::is_base_of_v<base_interface, Interface>>>
-                    handle<Interface> insert(Args &&... args);
+                template <typename Interface>
+                    handle<Interface> insert(owner<Interface> &&);
+                template <typename Interface, typename... Args>
+                    handle<Interface> insert(Args &&...);
 
-                template <typename Interface, typename = std::enable_if_t<std::is_base_of_v<base_interface, Interface>>>
-                    owner<Interface> release(Interface * element);
+                template <typename Interface>
+                    owner<Interface> release(Interface &);
 
-                void size(Nz::Vector2f const & value) override;
+                void size(Nz::Vector2f const &) override;
 
                 Nz::Vector2f size() const override;
 
                 std::size_t count() const;
 
-                void show(bool value) override;
+                void show(bool) override;
 
-                void scissor(bool value);
+                void scissor(bool);
 
                 template <typename Functor>
                     void for_each(Functor);
@@ -50,13 +52,13 @@
 
             private:
                 template <typename Interface>
-                    handle<Interface> insert(Interface * element);
+                    handle<Interface> insert(Interface *);
 
                 void scissor(Nz::Recti const &) override;
         };
 
     }
 
-    #include "container.inl"
+    #include <NzLab/container.inl>
 
-#endif /* HPP_CONTAINER_INCLUDED */
+#endif /* HPP_EX_CONTAINER_INCLUDED */

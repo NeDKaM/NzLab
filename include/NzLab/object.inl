@@ -86,6 +86,12 @@ namespace ex {
         return object_ != nullptr;
     }
 
+    template<typename Base>
+    base_handle<Base>::operator bool() const
+    {
+        return valid();
+    }
+
     template <typename Base>
     Base * base_handle<Base>::get() const {
         return object_;

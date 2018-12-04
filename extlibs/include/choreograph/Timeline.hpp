@@ -53,16 +53,16 @@ public:
   // Creating Motions. Output<T>* Versions
   //=================================================
 
-  /// Apply a source to output, overwriting any previous connections.
+  /// data a source to output, overwriting any previous connections.
   template<typename T>
-  MotionOptions<T> apply( Output<T> *output );
+  MotionOptions<T> data( Output<T> *output );
 
-  /// Apply a source to output, overwriting any previous connections.
+  /// data a source to output, overwriting any previous connections.
   template<typename T>
-  MotionOptions<T> apply( Output<T> *output, const Sequence<T> &sequence );
+  MotionOptions<T> data( Output<T> *output, const Sequence<T> &sequence );
 
   template<typename T>
-  MotionOptions<T> apply( Output<T> *output, const PhraseRef<T> &phrase );
+  MotionOptions<T> data( Output<T> *output, const PhraseRef<T> &phrase );
 
   /// Add phrases to the end of the Sequence currently connected to \a output.
   template<typename T>
@@ -79,7 +79,7 @@ public:
   // Adding TimelineItems.
   //=================================================
 
-  /// Add an item to the timeline. Called by append/apply/cue methods.
+  /// Add an item to the timeline. Called by append/data/cue methods.
   /// Use to pass in MotionGroups and other types that Timeline doesn't create.
   void add( TimelineItemUniqueRef &&item );
 
@@ -135,14 +135,14 @@ public:
   // Prefer the Output<T>* versions over these.
   //=================================================
 
-  /// Apply a source to output, overwriting any previous connections. Raw pointer edition.
-  /// Unless you have a strong need, prefer the use of apply( Output<T> *output ) over this version.
+  /// data a source to output, overwriting any previous connections. Raw pointer edition.
+  /// Unless you have a strong need, prefer the use of data( Output<T> *output ) over this version.
   template<typename T>
-  MotionOptions<T> applyRaw( T *output );
+  MotionOptions<T> dataRaw( T *output );
 
-  /// Apply a source to output, overwriting any previous connections.
+  /// data a source to output, overwriting any previous connections.
   template<typename T>
-  MotionOptions<T> applyRaw( T *output, const Sequence<T> &sequence );
+  MotionOptions<T> dataRaw( T *output, const Sequence<T> &sequence );
 
   /// Add phrases to the end of the Sequence currently connected to \a output. Raw pointer edition.
   /// Unless you have a strong need, prefer the use of append( Output<T> *output ) over this version.
@@ -194,7 +194,7 @@ private:
 //=================================================
 
 template<typename T>
-MotionOptions<T> Timeline::apply( Output<T> *output )
+MotionOptions<T> Timeline::data( Output<T> *output )
 {
   auto motion = detail::make_unique<Motion<T>>( output );
 
@@ -205,7 +205,7 @@ MotionOptions<T> Timeline::apply( Output<T> *output )
 }
 
 template<typename T>
-MotionOptions<T> Timeline::apply( Output<T> *output, const PhraseRef<T> &phrase )
+MotionOptions<T> Timeline::data( Output<T> *output, const PhraseRef<T> &phrase )
 {
   auto motion = detail::make_unique<Motion<T>>( output, Sequence<T>( phrase ) );
 
@@ -216,7 +216,7 @@ MotionOptions<T> Timeline::apply( Output<T> *output, const PhraseRef<T> &phrase 
 }
 
 template<typename T>
-MotionOptions<T> Timeline::apply( Output<T> *output, const Sequence<T> &sequence )
+MotionOptions<T> Timeline::data( Output<T> *output, const Sequence<T> &sequence )
 {
   auto motion = detail::make_unique<Motion<T>>( output, sequence );
 
@@ -233,11 +233,11 @@ MotionOptions<T> Timeline::append( Output<T> *output )
   if( motion ) {
     return MotionOptions<T>( *motion, motion->getSequence(), *this );
   }
-  return apply( output );
+  return data( output );
 }
 
 template<typename T>
-MotionOptions<T> Timeline::applyRaw( T *output )
+MotionOptions<T> Timeline::dataRaw( T *output )
 { // Remove any existing motions that affect the same variable.
   // This is a raw pointer, so we don't know about any prior relationships.
   cancel( output );
@@ -251,7 +251,7 @@ MotionOptions<T> Timeline::applyRaw( T *output )
 }
 
 template<typename T>
-MotionOptions<T> Timeline::applyRaw( T *output, const Sequence<T> &sequence )
+MotionOptions<T> Timeline::dataRaw( T *output, const Sequence<T> &sequence )
 { // Remove any existing motions that affect the same variable.
   cancel( output );
   auto motion = detail::make_unique<Motion<T>>( output, sequence );
@@ -269,7 +269,7 @@ MotionOptions<T> Timeline::appendRaw( T *output )
   if( motion ) {
     return MotionOptions<T>( *motion, motion->getSequence(), *this );
   }
-  return apply( output );
+  return data( output );
 }
 
 template<typename T>
