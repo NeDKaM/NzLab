@@ -32,16 +32,16 @@
 
             void keyboard_owner(ElementType *);
 
-            void mouse_moved(int, int, int, int);
-            void enter();
-            void exit();
-            void button_pressed(Nz::Mouse::Button, int, int);
-            void button_released(Nz::Mouse::Button, int, int);
-            void key_pressed(Nz::WindowEvent::KeyEvent const &);
-            void key_released(Nz::WindowEvent::KeyEvent const &);
-            void text_entered(char32_t, bool);
-            void focus_gained();
-            void focus_lost();
+            virtual void mouse_moved(int, int, int, int);
+            virtual void enter();
+            virtual void exit();
+            virtual void button_pressed(Nz::Mouse::Button, int, int);
+            virtual void button_released(Nz::Mouse::Button, int, int);
+            virtual void key_pressed(Nz::WindowEvent::KeyEvent const &);
+            virtual void key_released(Nz::WindowEvent::KeyEvent const &);
+            virtual void text_entered(char32_t, bool);
+            virtual void focus_gained();
+            virtual void focus_lost();
 
             private:
                 ex::container<ElementType, Events> * container_;
