@@ -43,7 +43,7 @@
 
                 Nz::Vector2f size() const override;
 
-                void size(Nz::Vector2f const &);
+                void size(Nz::Vector2f const &) override;
 
                 void show(bool) override;
 
