@@ -139,7 +139,9 @@ namespace ex::graphics {
         sprites_[7]->SetTextureCoords({ tx1, ty2, tw2, th3 });
         sprites_[8]->SetTextureCoords({ tx2, ty2, tw3, th3 });
 
-        auto texsize{ Nz::Vector2f{ Nz::Vector2ui{ sprites_[0]->GetMaterial()->GetDiffuseMap()->GetSize() } } };
+        auto & tex{ sprites_[0]->GetMaterial()->GetDiffuseMap() };
+
+        Nz::Vector2f texsize{ (tex) ? Nz::Vector2f{ Nz::Vector2ui{ tex->GetSize() } } : size_ };
 
         auto w1{ tw1 * texsize.x };
         auto w3{ tw3 * texsize.x };
