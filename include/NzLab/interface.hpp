@@ -30,8 +30,7 @@
 
             public:
                 interface() = delete;
-                template <typename... EventsArgs>
-                    interface(Ndk::World &, EventsArgs &&...);
+                template <typename... EventsArgs> interface(Ndk::World &, EventsArgs &&...);
                 interface(interface const &) = delete;
                 interface(interface &&) = default;
                 ~interface() = default;
@@ -47,8 +46,7 @@
 
                 void show(bool) override;
 
-                template <typename Style>
-                    void style(Style);
+                template <typename Style> void style(Style);
 
                 void scissor(Nz::Recti const &) override;
         };

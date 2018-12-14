@@ -30,8 +30,7 @@
             public:
                 using events_type = Events;
 
-                template <typename... EventsArgs>
-                    base_interface(EventsArgs &&... args);
+                template <typename... EventsArgs> base_interface(EventsArgs &&... args);
                 virtual ~base_interface() = default;
 
                 virtual Nz::Vector2f size() const = 0;
@@ -43,8 +42,7 @@
                 Nz::Recti scissor() const;
 
                 void anchor(Nz::Vector3f const &, Nz::Vector2f const &, ex::anchor const &);
-                template <typename Interface>
-                    void anchor(Interface const &, ex::anchor const &);
+                template <typename Interface> void anchor(Interface const &, ex::anchor const &);
                 ex::anchor anchor() const;
 
                 void padding(ex::padding const &);
